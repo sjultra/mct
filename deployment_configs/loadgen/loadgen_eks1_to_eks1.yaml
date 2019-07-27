@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: loadgen
+spec:
+  terminationGracePeriodSeconds: 5
+  restartPolicy: Always
+  initContainers:
+    - name: wait-frontend
+      image: alpine:3.6
+      command: ['sh', '-c', 'set -x;  apk add --no-cache curl && 
+      until timeout -t 4 curl -f "http://${FRONTEND_ADDR}"; do 
+      echo "waiting for http://${FRONTEND_ADDR}"; 
+      sleep 2;
+      done;']
+      env:
+        - name: FRONTEND_ADDR
+          value: "frontend:31113"
+  containers:
+    - name: main
+      image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.1.1
+      env:
+        - name: FRONTEND_ADDR
+          value: "frontend:31113"
+        - name: USERS
+          value: "100"
+      resources:
+        requests:
+          cpu: 300m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
