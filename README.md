@@ -5,3 +5,5 @@ This facilitates the set up, testing, and destruction of complete virtual enviro
 Each network security test lab environment incorporates three public cloud projects: Amazon AWS, Microsoft Azure, and Google Cloud Platform (GCP). 
 A pair of external “Admin” virtual machines is used for running the setup and test scripts. 
 This approach allows rapid iteration of the setup and testing steps using virtual machines and Kubernetes clusters with matching application services, network connections, and user access controls. 
+
+![VPN MCT Drawing](https://github.com/sjultra/mct/blob/master/drawings/VPN%20Diagram.png)
